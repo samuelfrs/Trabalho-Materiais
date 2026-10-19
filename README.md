@@ -125,5 +125,3 @@ O roteiro detalhado das falas e a demonstração ao vivo estão em **[`GUIA_ESTU
 ### Slide 5 — Resposta à Questão Central e Conclusões
 ![Slide 5](./slide_05.png)
 
-#   T r a b a l h o - M a t e r i a i s  
- 
