@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador Computacional — Efeito Fotoelétrico (TI0060 UFC)</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --bg-panel: #0b1120;
+      --border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: linear-gradient(90deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header .badge {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    header .meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    header .meta strong { color: #e2e8f0; }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 16px;
+      padding: 16px 20px;
+      flex: 1;
+    }
+    @media (max-width: 1100px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding-bottom: 8px;
+    }
+
+    .control-group {
+      margin-bottom: 16px;
+    }
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .control-value {
+      color: var(--accent);
+      font-family: 'Consolas', monospace;
+      font-weight: 700;
+    }
+    select, input[type="range"] {
+      width: 100%;
+    }
+    select {
+      background: var(--bg-panel);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    input[type="range"] {
+      accent-color: var(--accent);
+      height: 6px;
+      cursor: pointer;
+    }
+
+    .spectrum-bar {
+      height: 12px;
+      border-radius: 6px;
+      margin-top: 6px;
+      background: linear-gradient(90deg,
+        #5a1818 0%,
+        #ef4444 10%,
+        #f59e0b 16%,
+        #22c55e 20%,
+        #0ea5e9 25%,
+        #7c3aed 31%,
+        #4c1d95 45%,
+        #311042 100%
+      );
+      border: 1px solid rgba(255,255,255,0.2);
+      position: relative;
+    }
+    .spectrum-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .preset-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .btn {
+      background: var(--bg-panel);
+      color: #e2e8f0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 9px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+    }
+    .btn-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .canvas-container {
+      position: relative;
+      background: var(--bg-panel);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    #simCanvas {
+      width: 100%;
+      height: 310px;
+      display: block;
+    }
+
+    .status-banner {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .status-emitting {
+      background: rgba(34, 197, 94, 0.14);
+      border: 1px solid var(--accent-green);
+      color: #86efac;
+    }
+    .status-blocked {
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid var(--accent-red);
+      color: #fca5a5;
+    }
+    .status-stopped {
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid var(--accent-amber);
+      color: #fde68a;
+    }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 10px;
+    }
+    .metric-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .metric-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-family: 'Consolas', monospace;
+      margin-top: 3px;
+      color: #fff;
+    }
+    .metric-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 900px) {
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+    .chart-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .chart-box canvas {
+      width: 100%;
+      height: 210px;
+      display: block;
+    }
+    .formula-box {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 3px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.83rem;
+      line-height: 1.45;
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>
+    <span>⚡ Simulador Computacional: Efeito Fotoelétrico</span>
+    <span class="badge">Equação de Einstein: K<sub>máx</sub> = hf − φ</span>
+  </h1>
+  <div class="meta">
+    <strong>TI0060 - Materiais Eletrônicos e Optoeletrônicos</strong> | Prof. Joacir Andrade | <strong>Grupo 2: Logan e Samuel Farias</strong>
+  </div>
+</header>
+
+<div class="main-grid">
+  <!-- PAINEL DE CONTROLES -->
+  <div class="card">
+    <div class="card-title">
+      <span>🎛️ Parâmetros da Simulação</span>
+    </div>
+
+    <!-- 1. Seleção de Metal -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>1. Material Metálico (Cátodo)</span>
+        <span class="control-value" id="lblPhi">φ = 2,28 eV</span>
+      </div>
+      <select id="selMetal">
+        <option value="Na" selected>Sódio (Na) — φ = 2,28 eV (Visível)</option>
+        <option value="Co">Cobalto (Co) — φ = 3,90 eV (UV)</option>
+        <option value="Al">Alumínio (Al) — φ = 4,08 eV (UV)</option>
+        <option value="Pb">Chumbo (Pb) — φ = 4,14 eV (UV)</option>
+        <option value="Zn">Zinco (Zn) — φ = 4,31 eV (UV)</option>
+        <option value="Fe">Ferro (Fe) — φ = 4,50 eV (UV)</option>
+        <option value="Cu">Cobre (Cu) — φ = 4,70 eV (UV)</option>
+        <option value="Ag">Prata (Ag) — φ = 4,73 eV (UV)</option>
+        <option value="Pt">Platina (Pt) — φ = 6,35 eV (UV Profundo)</option>
+      </select>
+    </div>
+
+    <!-- 2. Frequência da Luz -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>2. Frequência da Luz (f)</span>
+        <span class="control-value" id="lblFreq">7,20 × 10¹⁴ Hz (416 nm)</span>
+      </div>
+      <input type="range" id="rngFreq" min="3.5" max="17.5" step="0.05" value="7.20" />
+      <div class="spectrum-bar"></div>
+      <div class="spectrum-labels">
+        <span>IV (3,5)</span>
+        <span>Visível (4,0–7,5)</span>
+        <span>Ultravioleta (7,5–17,5 × 10¹⁴ Hz)</span>
+      </div>
+
+      <div class="preset-btns">
+        <button class="btn" onclick="setFreq(4.30)"><span class="btn-dot" style="background:#ef4444"></span>Vermelha (4,3)</button>
+        <button class="btn" onclick="setFreq(5.10)"><span class="btn-dot" style="background:#f59e0b"></span>Amarela (5,1)</button>
+        <button class="btn" onclick="setFreq(5.60)"><span class="btn-dot" style="background:#22c55e"></span>Verde (5,6)</button>
+        <button class="btn" onclick="setFreq(6.30)"><span class="btn-dot" style="background:#0ea5e9"></span>Azul (6,3)</button>
+        <button class="btn" onclick="setFreq(7.20)"><span class="btn-dot" style="background:#8b5cf6"></span>Violeta (7,2)</button>
+        <button class="btn" onclick="setFreq(12.00)"><span class="btn-dot" style="background:#c084fc"></span>UV 250nm (12,0)</button>
+        <button class="btn" onclick="setFreq(16.50)"><span class="btn-dot" style="background:#e879f9"></span>UV-C (16,5)</button>
+      </div>
+    </div>
+
+    <!-- 3. Intensidade Luminosa -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>3. Intensidade da Luz (I)</span>
+        <span class="control-value" id="lblInt">75 %</span>
+      </div>
+      <input type="range" id="rngInt" min="0" max="100" step="5" value="75" />
+      <div class="preset-btns">
+        <button class="btn" onclick="setInt(0)">0% (Escuro)</button>
+        <button class="btn" onclick="setInt(30)">30% (Baixa)</button>
+        <button class="btn" onclick="setInt(60)">60% (Média)</button>
+        <button class="btn" onclick="setInt(100)">100% (Máxima)</button>
+      </div>
+    </div>
+
+    <!-- 4. Tensão Aplicada -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>4. Tensão Coletor-Cátodo (V)</span>
+        <span class="control-value" id="lblVolt">0,00 V</span>
+      </div>
+      <input type="range" id="rngVolt" min="-3.0" max="3.0" step="0.02" value="0.00" />
+      <div class="preset-btns">
+        <button class="btn" onclick="aplicarPotencialCorte()">🛑 Aplicar Potencial de Corte (−V₀)</button>
+        <button class="btn" onclick="setVolt(0)">0,00 V</button>
+        <button class="btn" onclick="setVolt(1.5)">+1,50 V (Saturação)</button>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <strong>💡 Guia Rápido para Demonstração:</strong><br/>
+      • <strong>Teste 1 (Frequência de Corte):</strong> Em <em>Sódio (Na)</em>, clique em <em>Amarela (5,1)</em> → nenhum elétron sai, mesmo com Intensidade em 100%!<br/>
+      • <strong>Teste 2 (Efeito da Frequência):</strong> Mude para <em>Violeta (7,2)</em> → elétrons saem com K<sub>máx</sub> = 0,70 eV.<br/>
+      • <strong>Teste 3 (Efeito da Intensidade):</strong> Mude a Intensidade de 30% para 100% → a corrente sobe, mas K<sub>máx</sub> e V₀ não mudam!
+    </div>
+  </div>
+
+  <!-- COLUNA DIREITA: ANIMAÇÃO + TELEMETRIA + GRÁFICOS -->
+  <div class="right-column">
+    <div class="card" style="padding: 14px;">
+      <div id="statusBanner" class="status-banner status-emitting" style="margin-bottom: 10px;">
+        <span id="statusText">✅ EMISSÃO ATIVA (f > f₀): Fótons possuem energia suficiente para arrancar fotoelétrons!</span>
+        <span id="statusRegime" style="font-family: monospace;">Regime Quântico Ativo</span>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="simCanvas" width="820" height="310"></canvas>
+      </div>
+
+      <!-- TELEMETRIA EM TEMPO REAL -->
+      <div class="telemetry-grid" style="margin-top: 12px;">
+        <div class="metric-box">
+          <div class="metric-label">Energia do Fóton (hf)</div>
+          <div class="metric-val" id="valEf" style="color:#38bdf8">2,98 eV</div>
+          <div class="metric-sub" id="subEf">λ = 416 nm (Violeta)</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Função Trabalho (φ)</div>
+          <div class="metric-val" id="valPhi" style="color:#f59e0b">2,28 eV</div>
+          <div class="metric-sub" id="subF0">Corte f₀ = 5,51×10¹⁴ Hz</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Energia Cinética (K<sub>máx</sub>)</div>
+          <div class="metric-val" id="valKmax" style="color:#22c55e">0,70 eV</div>
+          <div class="metric-sub" id="subVmax">v<sub>máx</sub> = 4,95×10⁵ m/s</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Potencial de Corte (V₀)</div>
+          <div class="metric-val" id="valV0" style="color:#a855f7">0,70 V</div>
+          <div class="metric-sub">Frenagem em V = −V₀</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Fotocorrente (I<sub>foto</sub>)</div>
+          <div class="metric-val" id="valIfoto" style="color:#facc15">7,78 µA</div>
+          <div class="metric-sub" id="subIfoto">Proporcional à Intensidade</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRÁFICOS EM TEMPO REAL -->
+    <div class="charts-grid">
+      <div class="chart-box">
+        <canvas id="chartKmax" width="420" height="210"></canvas>
+      </div>
+      <div class="chart-box">
+        <canvas id="chartIV" width="420" height="210"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Constantes Físicas (mesmos valores da Aula 03)
+  const H_EV_S = 4.135667696e-15; // eV.s
+  const Q_E = 1.602176634e-19;    // C
+  const M_E = 9.1093837e-31;      // kg
+  const C_LIGHT = 299792458.0;    // m/s
+
+  const METAIS = {
+    Na: { nome: "Sódio (Na)",    phi: 2.28, cor: "#38bdf8" },
+    Co: { nome: "Cobalto (Co)",  phi: 3.90, cor: "#fb923c" },
+    Al: { nome: "Alumínio (Al)", phi: 4.08, cor: "#4ade80" },
+    Pb: { nome: "Chumbo (Pb)",   phi: 4.14, cor: "#c084fc" },
+    Zn: { nome: "Zinco (Zn)",    phi: 4.31, cor: "#f472b6" },
+    Fe: { nome: "Ferro (Fe)",    phi: 4.50, cor: "#f87171" },
+    Cu: { nome: "Cobre (Cu)",    phi: 4.70, cor: "#fbbf24" },
+    Ag: { nome: "Prata (Ag)",    phi: 4.73, cor: "#cbd5e1" },
+    Pt: { nome: "Platina (Pt)",  phi: 6.35, cor: "#2dd4bf" }
+  };
+
+  // Estado da Simulação
+  let state = {
+    metalKey: "Na",
+    f14: 7.20,       // em 10^14 Hz
+    intensidade: 75, // 0 a 100 %
+    tensao: 0.00     // Volts
+  };
+
+  // Partículas animadas no Canvas
+  let fotons = [];
+  let eletrons = [];
+  let frameCount = 0;
+
+  // Elementos DOM
+  const selMetal = document.getElementById("selMetal");
+  const rngFreq = document.getElementById("rngFreq");
+  const rngInt = document.getElementById("rngInt");
+  const rngVolt = document.getElementById("rngVolt");
+
+  const simCanvas = document.getElementById("simCanvas");
+  const ctxSim = simCanvas.getContext("2d");
+  const chartKmax = document.getElementById("chartKmax");
+  const ctxKmax = chartKmax.getContext("2d");
+  const chartIV = document.getElementById("chartIV");
+  const ctxIV = chartIV.getContext("2d");
+
+  function freqToColor(f14) {
+    if (f14 < 4.0) return { hex: "#991b1b", nome: "Infravermelho" };
+    if (f14 < 4.8) return { hex: "#ef4444", nome: "Vermelha" };
+    if (f14 < 5.3) return { hex: "#f59e0b", nome: "Amarela" };
+    if (f14 < 6.0) return { hex: "#22c55e", nome: "Verde" };
+    if (f14 < 6.7) return { hex: "#0ea5e9", nome: "Azul" };
+    if (f14 <= 7.5) return { hex: "#8b5cf6", nome: "Violeta" };
+    return { hex: "#d946ef", nome: "Ultravioleta (UV)" };
+  }
+
+  function calcularFisica() {
+    const metal = METAIS[state.metalKey];
+    const phi = metal.phi;
+    const f_hz = state.f14 * 1e14;
+    const lambda_nm = (C_LIGHT / f_hz) * 1e9;
+    const ef = H_EV_S * f_hz;
+    const f0_14 = (phi / H_EV_S) / 1e14;
+    const lambda0_nm = (C_LIGHT / (f0_14 * 1e14)) * 1e9;
+    const kmax = Math.max(0, ef - phi);
+    const v0 = kmax;
+    const vmax = kmax > 0 ? Math.sqrt((2 * kmax * Q_E) / M_E) : 0;
+
+    // Cálculo da Fotocorrente em uA
+    let ifoto = 0;
+    const intRel = state.intensidade / 100.0;
+    if (kmax > 0 && intRel > 0) {
+      const iSat = 12.0 * intRel;
+      const deltaV = state.tensao - (-v0);
+      if (deltaV > 0) {
+        ifoto = iSat * (1.0 - Math.exp(-deltaV / 0.35));
+      }
+    }
+
+    return { metal, phi, f_hz, lambda_nm, ef, f0_14, lambda0_nm, kmax, v0, vmax, ifoto };
+  }
+
+  function atualizarUI() {
+    const d = calcularFisica();
+    const corInfo = freqToColor(state.f14);
+
+    document.getElementById("lblPhi").textContent = `φ = ${d.phi.toFixed(2).replace(".", ",")} eV`;
+    document.getElementById("lblFreq").textContent = `${state.f14.toFixed(2).replace(".", ",")} × 10¹⁴ Hz (${Math.round(d.lambda_nm)} nm)`;
+    document.getElementById("lblInt").textContent = `${state.intensidade} %`;
+    document.getElementById("lblVolt").textContent = `${state.tensao >= 0 ? "+" : ""}${state.tensao.toFixed(2).replace(".", ",")} V`;
+
+    document.getElementById("valEf").textContent = `${d.ef.toFixed(2).replace(".", ",")} eV`;
+    document.getElementById("subEf").textContent = `λ = ${Math.round(d.lambda_nm)} nm (${corInfo.nome})`;
+
+    document.getElementById("valPhi").textContent = `${d.phi.toFixed(2).replace(".", ",")} eV`;
+    document.getElementById("subF0").textContent = `f₀ = ${d.f0_14.toFixed(2).replace(".", ",")}×10¹⁴ Hz (${Math.round(d.lambda0_nm)} nm)`;
+
+    document.getElementById("valKmax").textContent = `${d.kmax.toFixed(2).replace(".", ",")} eV`;
+    document.getElementById("subVmax").textContent = d.vmax > 0
+      ? `v_máx = ${(d.vmax / 1e5).toFixed(2).replace(".", ",")}×10⁵ m/s`
+      : `v_máx = 0 m/s (Sem ejeção)`;
+
+    document.getElementById("valV0").textContent = `${d.v0.toFixed(2).replace(".", ",")} V`;
+    document.getElementById("valIfoto").textContent = `${d.ifoto.toFixed(2).replace(".", ",")} µA`;
+
+    const banner = document.getElementById("statusBanner");
+    const txt = document.getElementById("statusText");
+    const reg = document.getElementById("statusRegime");
+
+    if (state.intensidade === 0) {
+      banner.className = "status-banner status-stopped";
+      txt.textContent = "💡 FONTE DESLIGADA (Intensidade = 0%): Nenhum fóton emitido pela lâmpada.";
+      reg.textContent = "I = 0 µA";
+    } else if (d.kmax <= 0) {
+      banner.className = "status-banner status-blocked";
+      txt.textContent = `❌ SEM EMISSÃO (f < f₀): Energia do fóton (${d.ef.toFixed(2)} eV) é menor que a função trabalho φ (${d.phi.toFixed(2)} eV)!`;
+      reg.textContent = "Corte Quântico";
+    } else if (d.ifoto <= 0.01) {
+      banner.className = "status-banner status-stopped";
+      txt.textContent = `🛑 FRENAGEM TOTAL (V ≤ −V₀ = −${d.v0.toFixed(2)} V): Fotoelétrons são ejetados, mas repelidos antes do coletor!`;
+      reg.textContent = "Potencial de Corte";
+    } else {
+      banner.className = "status-banner status-emitting";
+      txt.textContent = `✅ EMISSÃO ATIVA (f > f₀): Fotoelétrons ejetados com K_máx = ${d.kmax.toFixed(2)} eV e coletados no ânodo!`;
+      reg.textContent = `I_foto = ${d.ifoto.toFixed(2)} µA`;
+    }
+
+    desenharGraficoKmax(d);
+    desenharGraficoIV(d);
+  }
+
+  // Funções de atalho dos botões
+  window.setFreq = function(val) {
+    state.f14 = val;
+    rngFreq.value = val;
+    eletrons = [];
+    atualizarUI();
+  };
+  window.setInt = function(val) {
+    state.intensidade = val;
+    rngInt.value = val;
+    atualizarUI();
+  };
+  window.setVolt = function(val) {
+    state.tensao = val;
+    rngVolt.value = val;
+    atualizarUI();
+  };
+  window.aplicarPotencialCorte = function() {
+    const d = calcularFisica();
+    const vCorte = -Number(d.v0.toFixed(2));
+    state.tensao = Math.max(-3.0, vCorte);
+    rngVolt.value = state.tensao;
+    atualizarUI();
+  };
+
+  selMetal.addEventListener("change", (e) => {
+    state.metalKey = e.target.value;
+    eletrons = [];
+    atualizarUI();
+  });
+  rngFreq.addEventListener("input", (e) => {
+    state.f14 = parseFloat(e.target.value);
+    atualizarUI();
+  });
+  rngInt.addEventListener("input", (e) => {
+    state.intensidade = parseInt(e.target.value, 10);
+    atualizarUI();
+  });
+  rngVolt.addEventListener("input", (e) => {
+    state.tensao = parseFloat(e.target.value);
+    atualizarUI();
+  });
+
+  // =========================================================================
+  // ANIMAÇÃO DO TUBO FOTOELÉTRICO (60 FPS)
+  // =========================================================================
+  function animarTubo() {
+    frameCount++;
+    const d = calcularFisica();
+    const corLuz = freqToColor(state.f14).hex;
+
+    ctxSim.clearRect(0, 0, simCanvas.width, simCanvas.height);
+
+    // Geometria do tubo
+    const tubeX = 150, tubeY = 35, tubeW = 520, tubeH = 180;
+    const catodoX = tubeX + 38;
+    const anodoX = tubeX + tubeW - 45;
+
+    // 1. Fonte de Luz (Canto Superior Esquerdo)
+    ctxSim.save();
+    ctxSim.fillStyle = "#334155";
+    ctxSim.strokeStyle = "#94a3b8";
+    ctxSim.lineWidth = 2;
+    ctxSim.beginPath();
+    ctxSim.roundRect(22, 18, 95, 52, 8);
+    ctxSim.fill();
+    ctxSim.stroke();
+
+    ctxSim.fillStyle = state.intensidade > 0 ? corLuz : "#475569";
+    ctxSim.beginPath();
+    ctxSim.arc(105, 44, 14, 0, Math.PI * 2);
+    ctxSim.fill();
+    ctxSim.fillStyle = "#f8fafc";
+    ctxSim.font = "bold 11px Segoe UI";
+    ctxSim.fillText("Fonte de Luz", 32, 39);
+    ctxSim.font = "10px Consolas";
+    ctxSim.fillStyle = "#cbd5e1";
+    ctxSim.fillText(`I = ${state.intensidade}%`, 32, 55);
+    ctxSim.restore();
+
+    // Feixe luminoso translúcido
+    if (state.intensidade > 0) {
+      ctxSim.save();
+      ctxSim.globalAlpha = 0.06 + 0.16 * (state.intensidade / 100);
+      ctxSim.fillStyle = corLuz;
+      ctxSim.beginPath();
+      ctxSim.moveTo(112, 34);
+      ctxSim.lineTo(catodoX + 6, tubeY + 25);
+      ctxSim.lineTo(catodoX + 6, tubeY + tubeH - 25);
+      ctxSim.lineTo(112, 54);
+      ctxSim.closePath();
+      ctxSim.fill();
+      ctxSim.restore();
+    }
+
+    // 2. Tubo de Vácuo (Cápsula)
+    ctxSim.save();
+    ctxSim.strokeStyle = "#64748b";
+    ctxSim.lineWidth = 2.5;
+    ctxSim.fillStyle = "rgba(15, 23, 42, 0.7)";
+    ctxSim.beginPath();
+    ctxSim.roundRect(tubeX, tubeY, tubeW, tubeH, 35);
+    ctxSim.fill();
+    ctxSim.stroke();
+    ctxSim.fillStyle = "#64748b";
+    ctxSim.font = "11px Segoe UI";
+    ctxSim.fillText("Tubo de Vidro Evacuado (Janela de Quartzo)", tubeX + 145, tubeY + 18);
+
+    // Placa do Cátodo (Metal selecionado)
+    ctxSim.fillStyle = d.metal.cor;
+    ctxSim.fillRect(catodoX - 6, tubeY + 22, 12, tubeH - 44);
+    ctxSim.fillStyle = "#e2e8f0";
+    ctxSim.font = "bold 11px Segoe UI";
+    ctxSim.fillText(`Cátodo: ${state.metalKey}`, catodoX - 18, tubeY + tubeH + 16);
+
+    // Placa do Ânodo (Coletor)
+    ctxSim.fillStyle = "#94a3b8";
+    ctxSim.fillRect(anodoX - 5, tubeY + 22, 10, tubeH - 44);
+    ctxSim.fillStyle = "#e2e8f0";
+    ctxSim.fillText("Coletor (Ânodo)", anodoX - 42, tubeY + tubeH + 16);
+    ctxSim.restore();
+
+    // 3. Circuito Externo (Fios, Fonte de Tensão V e Microamperímetro uA)
+    const wireY = 272;
+    ctxSim.save();
+    ctxSim.strokeStyle = "#64748b";
+    ctxSim.lineWidth = 2;
+    ctxSim.beginPath();
+    ctxSim.moveTo(catodoX, tubeY + tubeH - 22);
+    ctxSim.lineTo(catodoX, wireY);
+    ctxSim.lineTo(anodoX, wireY);
+    ctxSim.lineTo(anodoX, tubeY + tubeH - 22);
+    ctxSim.stroke();
+
+    // Fonte V no centro do fio inferior
+    const vBoxX = 335;
+    ctxSim.fillStyle = "#1e293b";
+    ctxSim.strokeStyle = "#a855f7";
+    ctxSim.lineWidth = 2;
+    ctxSim.beginPath();
+    ctxSim.roundRect(vBoxX, wireY - 22, 125, 40, 8);
+    ctxSim.fill();
+    ctxSim.stroke();
+    ctxSim.fillStyle = "#e9d5ff";
+    ctxSim.font = "bold 12px Consolas";
+    ctxSim.fillText(`V = ${state.tensao >= 0 ? "+" : ""}${state.tensao.toFixed(2)} V`, vBoxX + 14, wireY + 3);
+
+    // Amperímetro à direita
+    const aBoxX = 560;
+    ctxSim.fillStyle = "#1e293b";
+    ctxSim.strokeStyle = "#facc15";
+    ctxSim.beginPath();
+    ctxSim.arc(aBoxX, wireY, 22, 0, Math.PI * 2);
+    ctxSim.fill();
+    ctxSim.stroke();
+    ctxSim.fillStyle = "#fef08a";
+    ctxSim.font = "bold 11px Consolas";
+    ctxSim.fillText("µA", aBoxX - 9, wireY - 3);
+    ctxSim.font = "10px Consolas";
+    ctxSim.fillText(d.ifoto.toFixed(1), aBoxX - 11, wireY + 11);
+    ctxSim.restore();
+
+    // 4. Geração de Fótons
+    if (state.intensidade > 0) {
+      const spawnInterval = Math.max(3, Math.round(28 - 0.24 * state.intensidade));
+      if (frameCount % spawnInterval === 0) {
+        const targetY = tubeY + 32 + Math.random() * (tubeH - 64);
+        const startX = 110;
+        const startY = 44;
+        const dx = catodoX - startX;
+        const dy = targetY - startY;
+        const dist = Math.hypot(dx, dy);
+        const speed = 5.2;
+        fotons.push({
+          x: startX,
+          y: startY,
+          vx: (dx / dist) * speed,
+          vy: (dy / dist) * speed,
+          targetY,
+          cor: corLuz
+        });
+      }
+    }
+
+    // Atualização e desenho dos Fótons
+    for (let i = fotons.length - 1; i >= 0; i--) {
+      const p = fotons[i];
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Desenha fóton como pacote ondulatório brilhante
+      ctxSim.save();
+      ctxSim.fillStyle = p.cor;
+      ctxSim.shadowColor = p.cor;
+      ctxSim.shadowBlur = 8;
+      ctxSim.beginPath();
+      ctxSim.arc(p.x, p.y, 4.2, 0, Math.PI * 2);
+      ctxSim.fill();
+      ctxSim.restore();
+
+      // Chegou no Cátodo?
+      if (p.x >= catodoX) {
+        fotons.splice(i, 1);
+        if (d.kmax > 0) {
+          // Ejeta um fotoelétron! Energia cinética inicial entre 0.35*Kmax e 1.0*Kmax
+          // (garantindo que os de energia máxima cheguem exatamente até V = -V0)
+          const fracEnergia = 0.55 + 0.45 * Math.random();
+          const kInicial = d.kmax * fracEnergia;
+          const v0Px = 1.85 * Math.sqrt(kInicial); // escala visual de velocidade
+          eletrons.push({
+            x: catodoX + 6,
+            y: p.y,
+            vx: v0Px,
+            vy: (Math.random() - 0.5) * 0.35,
+            kInicial: kInicial
+          });
+        }
+      }
+    }
+
+    // 5. Atualização e desenho dos Fotoelétrons no espaço Cátodo -> Ânodo
+    // Pela conservação de energia: v^2(x) - v0^2 = 2 * a_x * (x - catodoX)
+    // Para que um elétron com kInicial (eV) pare exatamente antes do ânodo quando V = -kInicial:
+    // 0 - v0Px^2 = 2 * a_x * L => a_x = (1.85^2 * V) / (2 * L)
+    const L = (anodoX - 5) - (catodoX + 6);
+    const accelX = (1.85 * 1.85 * state.tensao) / (2.0 * L);
+
+    for (let i = eletrons.length - 1; i >= 0; i--) {
+      const el = eletrons[i];
+      el.vx += accelX;
+      el.x += el.vx;
+      el.y += el.vy;
+
+      // Desenha elétron (azul ciano com sinal '-')
+      ctxSim.save();
+      ctxSim.fillStyle = "#38bdf8";
+      ctxSim.strokeStyle = "#e0f2fe";
+      ctxSim.lineWidth = 1;
+      ctxSim.beginPath();
+      ctxSim.arc(el.x, el.y, 5, 0, Math.PI * 2);
+      ctxSim.fill();
+      ctxSim.stroke();
+      ctxSim.fillStyle = "#0f172a";
+      ctxSim.font = "bold 9px Consolas";
+      ctxSim.fillText("-", el.x - 2.5, el.y + 3);
+      ctxSim.restore();
+
+      // Remove se coletado no ânodo ou se voltou ao cátodo
+      if (el.x >= anodoX - 5 || el.x < catodoX) {
+        eletrons.splice(i, 1);
+      }
+    }
+
+    requestAnimationFrame(animarTubo);
+  }
+
+  // =========================================================================
+  // GRÁFICO 1: K_max vs. Frequência (f)
+  // =========================================================================
+  function desenharGraficoKmax(d) {
+    const w = chartKmax.width, h = chartKmax.height;
+    ctxKmax.clearRect(0, 0, w, h);
+
+    const padL = 46, padR = 18, padT = 28, padB = 34;
+    const plotW = w - padL - padR;
+    const plotH = h - padT - padB;
+
+    const fMin = 3.5, fMax = 18.0;
+    const kMin = 0.0, kMax = 4.5;
+
+    const toX = (f) => padL + ((f - fMin) / (fMax - fMin)) * plotW;
+    const toY = (k) => padT + plotH - ((k - kMin) / (kMax - kMin)) * plotH;
+
+    // Título
+    ctxKmax.fillStyle = "#e2e8f0";
+    ctxKmax.font = "bold 12px Segoe UI";
+    ctxKmax.fillText(`Energia Cinética K_máx (eV) vs. Frequência f (10¹⁴ Hz) — [${d.metal.nome}]`, padL - 10, 18);
+
+    // Eixos e grade
+    ctxKmax.strokeStyle = "#334155";
+    ctxKmax.lineWidth = 1;
+    for (let k = 0; k <= 4; k += 1) {
+      const y = toY(k);
+      ctxKmax.beginPath();
+      ctxKmax.moveTo(padL, y);
+      ctxKmax.lineTo(w - padR, y);
+      ctxKmax.stroke();
+      ctxKmax.fillStyle = "#94a3b8";
+      ctxKmax.font = "10px Consolas";
+      ctxKmax.fillText(k.toFixed(0), padL - 18, y + 3);
+    }
+
+    for (let f = 4; f <= 18; f += 2) {
+      const x = toX(f);
+      ctxKmax.beginPath();
+      ctxKmax.moveTo(x, padT);
+      ctxKmax.lineTo(x, padT + plotH);
+      ctxKmax.stroke();
+      ctxKmax.fillStyle = "#94a3b8";
+      ctxKmax.font = "10px Consolas";
+      ctxKmax.fillText(f.toString(), x - 6, padT + plotH + 14);
+    }
+
+    // Curva de Einstein para o metal selecionado
+    ctxKmax.strokeStyle = d.metal.cor;
+    ctxKmax.lineWidth = 2.5;
+    ctxKmax.beginPath();
+    for (let f = fMin; f <= fMax; f += 0.1) {
+      const k = Math.max(0, H_EV_S * f * 1e14 - d.phi);
+      const x = toX(f), y = toY(k);
+      if (f === fMin) ctxKmax.moveTo(x, y);
+      else ctxKmax.lineTo(x, y);
+    }
+    ctxKmax.stroke();
+
+    // Ponto de corte f0
+    const xF0 = toX(d.f0_14), yF0 = toY(0);
+    ctxKmax.fillStyle = "#f59e0b";
+    ctxKmax.beginPath();
+    ctxKmax.arc(xF0, yF0, 4.5, 0, Math.PI * 2);
+    ctxKmax.fill();
+
+    // Ponto de operação atual
+    const xOp = toX(state.f14), yOp = toY(d.kmax);
+    ctxKmax.fillStyle = "#ef4444";
+    ctxKmax.beginPath();
+    ctxKmax.arc(xOp, yOp, 6, 0, Math.PI * 2);
+    ctxKmax.fill();
+    ctxKmax.strokeStyle = "#fff";
+    ctxKmax.lineWidth = 1.5;
+    ctxKmax.stroke();
+  }
+
+  // =========================================================================
+  // GRÁFICO 2: Fotocorrente I_foto vs. Tensão V
+  // =========================================================================
+  function desenharGraficoIV(d) {
+    const w = chartIV.width, h = chartIV.height;
+    ctxIV.clearRect(0, 0, w, h);
+
+    const padL = 46, padR = 18, padT = 28, padB = 34;
+    const plotW = w - padL - padR;
+    const plotH = h - padT - padB;
+
+    const vMin = -3.0, vMax = 3.0;
+    const iMin = 0.0, iMax = 13.0;
+
+    const toX = (v) => padL + ((v - vMin) / (vMax - vMin)) * plotW;
+    const toY = (i) => padT + plotH - ((i - iMin) / (iMax - iMin)) * plotH;
+
+    // Título
+    ctxIV.fillStyle = "#e2e8f0";
+    ctxIV.font = "bold 12px Segoe UI";
+    ctxIV.fillText(`Curva Fotocorrente I (µA) vs. Tensão V (Volts)`, padL - 10, 18);
+
+    // Grade
+    ctxIV.strokeStyle = "#334155";
+    ctxIV.lineWidth = 1;
+    for (let i = 0; i <= 12; i += 3) {
+      const y = toY(i);
+      ctxIV.beginPath();
+      ctxIV.moveTo(padL, y);
+      ctxIV.lineTo(w - padR, y);
+      ctxIV.stroke();
+      ctxIV.fillStyle = "#94a3b8";
+      ctxIV.font = "10px Consolas";
+      ctxIV.fillText(i.toString(), padL - 22, y + 3);
+    }
+
+    for (let v = -3; v <= 3; v += 1) {
+      const x = toX(v);
+      ctxIV.beginPath();
+      ctxIV.moveTo(x, padT);
+      ctxIV.lineTo(x, padT + plotH);
+      ctxIV.stroke();
+      ctxIV.fillStyle = "#94a3b8";
+      ctxIV.font = "10px Consolas";
+      ctxIV.fillText(v.toString() + "V", x - 8, padT + plotH + 14);
+    }
+
+    // Curva I-V atual
+    ctxIV.strokeStyle = "#22c55e";
+    ctxIV.lineWidth = 2.5;
+    ctxIV.beginPath();
+    const intRel = state.intensidade / 100.0;
+    for (let v = vMin; v <= vMax; v += 0.05) {
+      let ic = 0;
+      if (d.kmax > 0 && intRel > 0) {
+        const dv = v - (-d.v0);
+        if (dv > 0) ic = (12.0 * intRel) * (1.0 - Math.exp(-dv / 0.35));
+      }
+      const x = toX(v), y = toY(ic);
+      if (v === vMin) ctxIV.moveTo(x, y);
+      else ctxIV.lineTo(x, y);
+    }
+    ctxIV.stroke();
+
+    // Ponto de operação atual (tensao, ifoto)
+    const xOp = toX(state.tensao), yOp = toY(d.ifoto);
+    ctxIV.fillStyle = "#facc15";
+    ctxIV.beginPath();
+    ctxIV.arc(xOp, yOp, 6, 0, Math.PI * 2);
+    ctxIV.fill();
+    ctxIV.strokeStyle = "#fff";
+    ctxIV.lineWidth = 1.5;
+    ctxIV.stroke();
+  }
+
+  // Inicializa
+  atualizarUI();
+  animarTubo();
+</script>
+</body>
+</html>

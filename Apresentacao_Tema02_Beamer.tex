@@ -1,0 +1,180 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+% Tema e Cores Acadêmicas UFC
+\usetheme{Madrid}
+\usecolortheme{whale}
+\definecolor{ufcblue}{RGB}{15, 44, 89}
+\definecolor{ufcaccent}{RGB}{2, 132, 199}
+\setbeamercolor{palette primary}{bg=ufcblue, fg=white}
+\setbeamercolor{palette secondary}{bg=ufcaccent, fg=white}
+\setbeamercolor{structure}{fg=ufcblue}
+\setbeamercolor{block title}{bg=ufcblue, fg=white}
+\setbeamercolor{block body}{bg=ufcblue!6, fg=black}
+\setbeamertemplate{navigation symbols}{}
+
+\title[Efeito Fotoelétrico — Tema 2]{Efeito Fotoelétrico por meio de Simulação Computacional}
+\subtitle{TI0060 — Materiais Eletrônicos e Optoeletrônicos (1ª Avaliação)}
+\author[Logan e Samuel Farias]{\textbf{Equipe (Tema 2):} Logan e Samuel Farias \\ \vspace{0.15cm} {\small Prof. Dr. Joacir Andrade}}
+\institute[UFC]{Universidade Federal do Ceará (UFC) \\ Engenharia de Telecomunicações — 2026.2}
+\date{Outubro de 2026}
+
+\begin{document}
+
+% =============================================================================
+% SLIDE 1: TÍTULO, QUESTÃO CENTRAL E CONFLITO CLÁSSICO vs. QUÂNTICO
+% =============================================================================
+\begin{frame}{1. Questão Central e a Ruptura Quântica (Planck-Einstein)}
+  \vspace{-0.15cm}
+  \begin{block}{Tema 2 — Equipe: Logan e Samuel Farias (TI0060 - Prof. Joacir Andrade)}
+    \textbf{Questão Central:} Como a \textbf{frequência ($f$)} e a \textbf{intensidade ($I$)} da luz incidente influenciam a emissão de elétrons de uma superfície metálica, e como a simulação verifica as previsões da teoria quântica?
+  \end{block}
+
+  \vspace{0.1cm}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{alertblock}{Falha da Teoria Clássica Ondulatória}
+        \footnotesize
+        \begin{itemize}
+          \item A energia da onda eletromagnética dependeria apenas da sua amplitude (intensidade $I \propto |\mathbf{E}_0|^2$).
+          \item \textbf{Previsão incorreta 1:} Luz de qualquer frequência deveria arrancar elétrons se a intensidade $I$ fosse alta o suficiente.
+          \item \textbf{Previsão incorreta 2:} $K_{\max}$ deveria crescer com o aumento da intensidade luminosa $I$.
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{exampleblock}{Solução Quântica (Planck 1900 / Einstein 1905)}
+        \footnotesize
+        \begin{itemize}
+          \item A luz é constituída por pacotes discretos de energia (\textbf{fótons}):
+          \[ E_f = h f = \frac{h c}{\lambda} \]
+          \item $h = 6{,}626 \times 10^{-34}\text{ J}\cdot\text{s} \approx 4{,}136 \times 10^{-15}\text{ eV}\cdot\text{s}$.
+          \item A absorção ocorre individualmente (\textbf{1 fóton $\rightarrow$ 1 elétron}).
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 2: MODELAGEM FÍSICA, FUNÇÃO TRABALHO E EQUAÇÃO DE EINSTEIN
+% =============================================================================
+\begin{frame}{2. Modelagem Física: Função Trabalho ($\phi$) e Equação de Einstein}
+  \begin{columns}[c]
+    \begin{column}{0.52\textwidth}
+      \footnotesize
+      \textbf{Balanço de Energia Quântico no Metal:}
+      \begin{itemize}
+        \item \textbf{Função Trabalho ($\phi \equiv W_0$):} Energia mínima para extrair um elétron do nível de Fermi até o vácuo externo.
+        \item \textbf{Frequência de Corte ($f_0$):} Limiar abaixo do qual \textbf{não há emissão} ($hf < \phi$):
+        \[ f_0 = \frac{\phi}{h}, \qquad \lambda_0 = \frac{c}{f_0} = \frac{hc}{\phi} \]
+        \item \textbf{Equação de Einstein ($f \ge f_0$):}
+        \[ K_{\max} = E_c = h f - \phi = h(f - f_0) \]
+        \item \textbf{Potencial de Corte ($V_0$):} Tensão reversa que freia os fotoelétrons mais rápidos ($q V_0 = K_{\max}$):
+        \[ V_0 = \frac{h}{q} f - \frac{\phi}{q}, \qquad v_{\max} = \sqrt{\frac{2 K_{\max}}{m_e}} \]
+      \end{itemize}
+    \end{column}
+
+    \begin{column}{0.46\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{fig3_comparacao_metais_barreira.png}
+      \vspace{-0.2cm}
+      {\scriptsize Comparação dos 9 metais estudados na Aula 03 (Slide 8).}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 3: SIMULAÇÃO 1 — EFEITO DA FREQUÊNCIA E DO TIPO DE METAL
+% =============================================================================
+\begin{frame}{3. Simulação 1: Efeito da Frequência ($f$) e do Material ($K_{\max} \times f$)}
+  \begin{columns}[c]
+    \begin{column}{0.57\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{fig1_kmax_vs_frequencia.png}
+    \end{column}
+
+    \begin{column}{0.41\textwidth}
+      \scriptsize
+      \textbf{Estudo de Caso (Aula 03 — Sódio, $\phi = 2{,}28\text{ eV}$):}
+      \vspace{0.1cm}
+      \begin{table}
+        \centering
+        \begin{tabular}{lccc}
+          \toprule
+          \textbf{Cor ($f$)} & $E_f$ & $K_{\max}$ & \textbf{Emissão?} \\
+          \midrule
+          Vermelha ($4{,}3$) & $1{,}78\text{ eV}$ & $0{,}00\text{ eV}$ & Não \\
+          Amarela ($5{,}1$)  & $2{,}11\text{ eV}$ & $0{,}00\text{ eV}$ & Não \\
+          Verde ($5{,}6$)    & $2{,}32\text{ eV}$ & $0{,}04\text{ eV}$ & Sim \\
+          Azul ($6{,}3$)     & $2{,}61\text{ eV}$ & $0{,}33\text{ eV}$ & Sim \\
+          Violeta ($7{,}2$)  & $2{,}98\text{ eV}$ & $0{,}70\text{ eV}$ & Sim \\
+          UV 300nm ($10{,}0$)& $4{,}13\text{ eV}$ & $1{,}85\text{ eV}$ & Sim \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+      \vspace{0.05cm}
+      \begin{itemize}
+        \item No Sódio ($f_0 = 5{,}51\times 10^{14}\text{ Hz}$), a luz \textbf{violeta} ejeta elétrons com $v_{\max} = 4{,}95\times 10^5\text{ m/s}$, enquanto a \textbf{amarela} não ejeta nada.
+        \item Todas as retas têm a \textbf{mesma inclinação universal $h$}.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 4: SIMULAÇÃO 2 — INTENSIDADE vs. FREQUÊNCIA NA FOTOCORRENTE
+% =============================================================================
+\begin{frame}{4. Simulação 2: Intensidade ($I$) vs. Frequência ($f$) na Curva $I_{\text{foto}} \times V$}
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig2_corrente_vs_tensao.png}
+  \vspace{-0.15cm}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \scriptsize
+      \textbf{(a) Variação da Intensidade ($f$ fixa):} Aumentar $I$ multiplica o número de fótons/s $\Rightarrow$ a fotocorrente de saturação cresce proporcionalmente, mas o potencial de corte $-V_0 = -0{,}70\text{ V}$ (e $K_{\max}$) \textbf{não se altera}.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \scriptsize
+      \textbf{(b) Variação da Frequência (Taxa de fótons fixa):} Aumentar $f$ eleva a energia individual de cada fóton ($hf$) $\Rightarrow$ $K_{\max}$ cresce e o potencial de corte $-V_0$ torna-se mais negativo.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 5: RESPOSTA À QUESTÃO CENTRAL E SIMULADOR INTERATIVO
+% =============================================================================
+\begin{frame}{5. Conclusões e Verificação no Simulador Computacional Interativo}
+  \scriptsize
+  \begin{table}
+    \centering
+    \begin{tabular}{p{3.0cm}p{3.6cm}p{3.8cm}p{2.8cm}}
+      \toprule
+      \textbf{Parâmetro na Simulação} & \textbf{Previsão Clássica (Refutada)} & \textbf{Previsão Quântica (Confirmada)} & \textbf{Observável Medido} \\
+      \midrule
+      \textbf{Frequência ($f < f_0$)} & Emite se $I$ for muito alta & \textbf{Zero emissão} para qualquer $I$ & $I_{\text{foto}} = 0\text{ }\mu\text{A}$ \\
+      \textbf{Frequência ($f \ge f_0$)} & Não altera a energia máxima & $K_{\max} = hf - \phi$ cresce linearmente & $V_0$ aumenta com inclinação $h/q$ \\
+      \textbf{Intensidade ($I \uparrow$)} & Aumenta $K_{\max}$ dos elétrons & Aumenta apenas a taxa de fótons/s & $I_{\text{sat}} \propto I$, mas $K_{\max}$ é constante \\
+      \textbf{Metal ($\phi \uparrow$)} & Sem corte abrupto de frequência & Desloca $f_0 = \phi/h$ para o UV & Retas paralelas deslocadas \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{0.1cm}
+  \begin{block}{Síntese Final e Aplicações em Engenharia de Telecomunicações e Optoeletrônica}
+    \begin{itemize}
+      \item A simulação comprova a quantização da radiação eletromagnética ($E = hf$): a \textbf{frequência} governa a energia individual do fotoelétron ($K_{\max}$), enquanto a \textbf{intensidade} governa a quantidade de elétrons ejetados por segundo ($I_{\text{foto}}$).
+      \item Base física direta de \textbf{fototubos, células fotoelétricas, fotomultiplicadoras e sensores ópticos} em comunicações ópticas.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\end{document}
