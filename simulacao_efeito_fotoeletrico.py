@@ -302,6 +302,7 @@ def gerar_fig3_comparacao_metais(output_dir: str) -> str:
     """
     Figura 3: Comparação dos 9 metais da Aula 03 (Slide 8) quanto à Função Trabalho (phi)
     e a resposta sob Luz Violeta (2.98 eV) vs. Ultravioleta (5.38 eV).
+    Otimizada para caber perfeitamente no slide sem encostar nas bordas ou rodapé.
     """
     siglas = list(METAIS_AULA03.keys())
     phis = np.array([METAIS_AULA03[s]["phi"] for s in siglas])
@@ -310,33 +311,35 @@ def gerar_fig3_comparacao_metais(output_dir: str) -> str:
     e_violeta = float(calcular_energia_foton_ev(7.2e14))  # ~ 2.98 eV
     e_uv = float(calcular_energia_foton_ev(1.30e15))      # ~ 5.38 eV (230 nm)
 
-    fig, ax = plt.subplots(figsize=(9.5, 4.8), dpi=300)
+    fig, ax = plt.subplots(figsize=(11.0, 3.4), dpi=300)
 
     barras = ax.bar(
         x,
         phis,
-        width=0.58,
+        width=0.52,
         color=["#2563eb" if p < e_violeta else ("#0d9488" if p < e_uv else "#64748b") for p in phis],
-        edgecolor="#1e293b",
-        linewidth=1.0,
-        alpha=0.88,
-        label="Função Trabalho $\\phi$ (eV) do Metal",
+        edgecolor="#0f172a",
+        linewidth=1.1,
+        alpha=0.92,
+        label=r"Função Trabalho $\phi$ (eV)",
+        zorder=3,
     )
 
-    # Linhas horizontais de energia de fótons
     ax.axhline(
         e_violeta,
         color="#7209b7",
         linestyle="--",
         linewidth=2.2,
-        label=f"Luz Violeta ($f = 7,2\\times 10^{{14}}$ Hz $\\rightarrow E_f = {e_violeta:.2f}$ eV): só o Sódio emite!",
+        label=f"Luz Violeta ($f = 7,2\times 10^{{14}}$ Hz $\rightarrow E_f = {e_violeta:.2f}$ eV): Só o Sódio emite!",
+        zorder=4,
     )
     ax.axhline(
         e_uv,
         color="#dc2626",
         linestyle="-.",
         linewidth=2.2,
-        label=f"Luz Ultravioleta ($\\lambda = 230$ nm $\\rightarrow E_f = {e_uv:.2f}$ eV): emite até a Prata (Ag)",
+        label=f"Luz UV ($\lambda = 230$ nm $\rightarrow E_f = {e_uv:.2f}$ eV): Emite até a Prata (Ag)",
+        zorder=4,
     )
 
     for barra, phi in zip(barras, phis):
@@ -346,22 +349,25 @@ def gerar_fig3_comparacao_metais(output_dir: str) -> str:
             f"{phi:.2f} eV",
             ha="center",
             va="bottom",
-            fontsize=8.8,
+            fontsize=9.8,
             fontweight="bold",
+            color="#0f172a",
+            zorder=5,
         )
 
     ax.set_xticks(x)
-    ax.set_xticklabels([METAIS_AULA03[s]["nome"] for s in siglas], rotation=20, ha="right", fontsize=9.5)
-    ax.set_ylabel("Energia (eV)", fontsize=11)
+    ax.set_xticklabels([METAIS_AULA03[s]["nome"] for s in siglas], rotation=12, ha="right", fontsize=10.5, fontweight="bold")
+    ax.set_ylabel("Energia (eV)", fontsize=11.5, fontweight="bold")
     ax.set_title(
-        "Comparação dos 9 Metais da Aula 03: Função Trabalho ($\\phi$) vs. Energia do Fóton ($hf$)",
-        fontsize=12.5,
+        r"Comparação dos 9 Metais (Aula 03): Função Trabalho ($\phi$) vs. Limiares de Energia ($hf$)",
+        fontsize=12.0,
         fontweight="bold",
-        pad=10,
+        pad=5,
+        color="#0f2c59",
     )
-    ax.set_ylim(0, 7.2)
-    ax.grid(True, axis="y", linestyle="--", alpha=0.45)
-    ax.legend(fontsize=9.0, loc="upper left")
+    ax.set_ylim(0, 7.3)
+    ax.grid(True, axis="y", linestyle="--", alpha=0.50, zorder=0)
+    ax.legend(fontsize=9.5, loc="upper left", framealpha=0.96, facecolor="#ffffff", edgecolor="#cbd5e1")
 
     plt.tight_layout()
     caminho = os.path.join(output_dir, "fig3_comparacao_metais_barreira.png")
@@ -369,44 +375,5 @@ def gerar_fig3_comparacao_metais(output_dir: str) -> str:
     plt.close(fig)
     return caminho
 
-
 # =============================================================================
 # 5. RELATÓRIO NO TERMINAL E EXECUÇÃO PRINCIPAL
-# =============================================================================
-def imprimir_relatorio_analitico() -> None:
-    print("=" * 85)
-    print("SIMULAÇÃO DO EFEITO FOTOELÉTRICO - TI0060 (EQUIPE: LOGAN E SAMUEL FARIAS)")
-    print("=" * 85)
-    print(f"{'Metal':<16} | {'phi (eV)':<9} | {'f_0 (10^14 Hz)':<15} | {'lambda_0 (nm)':<14} | {'Região de Corte'}")
-    print("-" * 85)
-    for sigla, d in METAIS_AULA03.items():
-        phi = d["phi"]
-        f0 = phi / H_EV_S
-        lam0_nm = (C_LIGHT / f0) * 1e9
-        regiao = "Visível (Verde)" if lam0_nm >= 400 else "Ultravioleta (UV)"
-        print(f"{d['nome']:<16} | {phi:<9.2f} | {f0/1e14:<15.2f} | {lam0_nm:<14.1f} | {regiao}")
-
-    print("\n" + "=" * 85)
-    print("ESTUDO DE CASO DA AULA 03 (SLIDE 8): PLACA DE SÓDIO (Na, phi = 2,28 eV)")
-    print("=" * 85)
-    phi_na = METAIS_AULA03["Na"]["phi"]
-    for nome_cor, f_hz, _ in CORES_LUZ_AULA03 + [("Ultravioleta (300 nm)", C_LIGHT / 300e-9, "#000")]:
-        ef = float(calcular_energia_foton_ev(f_hz))
-        kmax = float(calcular_kmax_ev(f_hz, phi_na))
-        vmax = float(calcular_velocidade_max_m_s(kmax))
-        status = "EMITE ELÉTRONS" if kmax > 0 else "NÃO EMITE (hf < phi)"
-        print(
-            f"Cor: {nome_cor:<22} | f = {f_hz/1e14:5.2f}x10^14 Hz | "
-            f"E_foton = {ef:4.2f} eV | K_max = {kmax:4.2f} eV | "
-            f"v_max = {vmax/1e5:5.2f}x10^5 m/s | {status}"
-        )
-    print("=" * 85)
-
-
-if __name__ == "__main__":
-    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-    imprimir_relatorio_analitico()
-    c1 = gerar_fig1_kmax_vs_frequencia(diretorio_atual)
-    c2 = gerar_fig2_corrente_vs_tensao(diretorio_atual)
-    c3 = gerar_fig3_comparacao_metais(diretorio_atual)
-    print(f"\n[OK] Figuras geradas com sucesso em:\n  1) {c1}\n  2) {c2}\n  3) {c3}")
