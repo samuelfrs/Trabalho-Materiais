@@ -9,13 +9,18 @@
 
 ---
 
-## 1. Visão Geral da Estrutura Atualizada (Atendendo às Recomendações do Professor)
+## 1. Visão Geral da Estrutura Atualizada (Com Simulação no Penúltimo Slide)
 
-Seguindo as orientações do Dr. Joacir Andrade contidas no arquivo `dicas`:
-1. **Até 8 Slides:** O gráfico comparativo dos 9 metais agora ocupa uma **página inteira dedicada (Slide 3)**, garantindo visualização grande, nítida e sem aperto.
-2. **Slide Exclusivo de Diferenciação Teórica (Slide 7):** Confronto detalhado entre **Efeito Fotoelétrico (externo)** e **Efeito Fotovoltaico (interno)**.
-3. **Aplicações em Engenharia (Slide 8):** Citação de fotomultiplicadores (PMT), visão noturna, espectroscopia XPS e fotodetectores para fibra óptica.
-4. **Referências Bibliográficas (Slide 8):** Citação do livro-texto (Kasap), Eisberg-Resnick, Tipler e notas de aula do professor.
+A sequência de slides foi refinada para colocar a demonstração computacional interativa no **penúltimo slide (Slide 7)**, antecedendo o fechamento com aplicações práticas e referências (Slide 8):
+
+1. **Slide 1:** O Problema (Fenômenos não intuitivos e variáveis do sistema).
+2. **Slide 2:** Como Resolvemos (Modelagem teórica e equações governantes).
+3. **Slide 3:** Simulação dos 9 Metais (Página dedicada para a barreira $\phi$ vs. luz visível e UV).
+4. **Slide 4:** Resultados 1 (Influência de $f$, retas paralelas de inclinação $h$ e caso do Sódio).
+5. **Slide 5:** Resultados 2 (Curvas $I_{\text{foto}} \times V$: efeito da Intensidade vs. Frequência).
+6. **Slide 6:** Diferenciação Teórica (Efeito Fotoelétrico externo vs. Efeito Fotovoltaico interno).
+7. **Slide 7 (PENÚLTIMO):** A Simulação Computacional Interativa (Demonstração prática ao vivo no navegador + Resposta definitiva à Questão Central).
+8. **Slide 8 (FINAL):** Aplicações em Engenharia de Telecomunicações e Referências Bibliográficas.
 
 ---
 
@@ -28,8 +33,8 @@ Seguindo as orientações do Dr. Joacir Andrade contidas no arquivo `dicas`:
 | **3** | **Simulação dos 9 Metais** | Página inteira: barreira $\phi$ vs. faixas visível e UV | **Samuel Farias** | ~01:45 min |
 | **4** | **Resultados 1 (Frequência)** | Curvas $K_{\max} \times f$ com inclinação $h$ e caso do Sódio | **Logan** | ~02:00 min |
 | **5** | **Resultados 2 (Fotocorrente)** | Curvas $I_{\text{foto}} \times V$: efeito de Intensidade vs. Frequência | **Logan** | ~02:00 min |
-| **6** | **Simulação ao Vivo** | Demonstração em tempo real no Canvas + Resposta central | **Logan + Samuel** | ~02:15 min |
-| **7** | **Fotoelétrico vs. Fotovoltaico** | Tabela comparativa: externo vs. interno, $\phi$ vs. $E_g$ | **Logan** | ~01:45 min |
+| **6** | **Fotoelétrico vs. Fotovoltaico** | Tabela comparativa: externo vs. interno, $\phi$ vs. $E_g$ | **Logan** | ~01:45 min |
+| **7** | **Simulação ao Vivo (Penúltimo)** | Demonstração em tempo real no Canvas + Resposta central | **Logan + Samuel** | ~02:15 min |
 | **8** | **Aplicações e Referências** | Aplicações em Telecom e citação bibliográfica formal | **Samuel Farias** | ~01:15 min |
 | **Total** | — | — | **Dupla** | **~12:00 min** |
 
@@ -98,39 +103,39 @@ Seguindo as orientações do Dr. Joacir Andrade contidas no arquivo `dicas`:
 
 ---
 
-### ⏱️ SLIDE 6 — A Simulação Interativa e Validação ao Vivo (08:45 – 11:00)
+### ⏱️ SLIDE 6 — Diferenciação: Efeito Fotoelétrico vs. Efeito Fotovoltaico (08:45 – 10:30)
+* **Quem apresenta:** Logan
+* **Roteiro de Fala:**
+  1. *"No Slide 6, apresentamos a diferenciação física rigorosa entre o **Efeito Fotoelétrico** e o **Efeito Fotovoltaico** antes de irmos para a demonstração prática:"*
+  2. *"Existem quatro diferenças fundamentais:"*
+     - *"1. **Mecanismo e Localização:** O efeito fotoelétrico é uma **fotoemissão externa** — o elétron absorve o fóton e é ejetado para fora do material (para o vácuo). Já o efeito fotovoltaico é uma **fotoexcitação interna** — o elétron absorve o fóton e é promovido da banda de valência para a banda de condução, gerando um par elétron-buraco dentro do semicondutor."*
+     - *"2. **Barreira Energética:** No fotoelétrico, a barreira é a **Função Trabalho ($\phi$)** dos metais (típica de $2{,}2$ a $6{,}5\text{ eV}$), exigindo UV ou violeta. No fotovoltaico, a barreira é a **Energia de Bandgap ($E_g$)** do semicondutor ($\sim 1{,}1\text{ eV}$ no Silício), permitindo absorver praticamente todo o visível e infravermelho próximo."*
+     - *"3. **Geração de Tensão:** O efeito fotoelétrico **não gera força eletromotriz espontânea** — ele precisa de uma fonte externa no circuito para drenar a corrente. No efeito fotovoltaico, o campo elétrico interno da **junção p-n** separa os elétrons e buracos, criando uma tensão de circuito aberto útil ($V_{oc}$) capaz de alimentar cargas elétricas diretamente."*
+     - *"4. **Dispositivos:** O fotoelétrico dá origem a tubos fotomultiplicadores e fototubos a vácuo; o fotovoltaico é a base das células solares e dos fotodiodos PIN/APD das telecomunicações."*
+
+---
+
+### ⏱️ SLIDE 7 — A Simulação Interativa e Validação ao Vivo (PENÚLTIMO) (10:30 – 12:45)
 * **Quem apresenta:** Logan e Samuel Farias
 * **Como conduzir:**
-  1. *(Samuel introduz o slide em 20 segundos):* *"Para validar essas conclusões em tempo real, desenvolvemos o `simulador_interativo.html`, que funciona offline no navegador com animação física via HTML5 Canvas."*
+  1. *(Samuel introduz o slide em 20 segundos):* *"Agora, no Slide 7, coroamos toda a validação física demonstrando a ferramenta interativa que desenvolvemos: o `simulador_interativo.html`, que funciona offline no navegador com animação física via HTML5 Canvas."*
   2. *(Logan dá `Alt + Tab` para o navegador em tela cheia e faz os 3 testes rápidos em 1 minuto):*
      - **Teste 1 (Corte):** *"Sódio sob Luz Amarela a 100% de intensidade $\implies$ nenhum elétron sai da placa porque $hf < \phi$."*
      - **Teste 2 (Emissão e Frenagem):** *"Luz Violeta $\implies$ fotoelétrons fluem; clicamos no botão vermelho `🛑 Aplicar Potencial de Corte (-V₀)` ($-0{,}70\text{ V}$) e os elétrons freiam no meio do tubo antes de tocar o ânodo, zerando a corrente."*
      - **Teste 3 (Troca de Metal):** *"Mudando para Cobre ($\phi = 4{,}70\text{ eV}$), a luz violeta para de emitir; clicando em UV ($250\text{ nm}$), a emissão é retomada na hora."*
-  3. *(Samuel volta ao Slide 6 e resume a resposta central em 30 segundos):*
+  3. *(Samuel volta ao Slide 7 e resume a resposta central em 30 segundos):*
      - *"Frequência governa a **qualidade da energia** por pacote ($E=hf$), determinando $K_{\max}$ e se haverá emissão."*
      - *"Intensidade governa a **quantidade de pacotes** por segundo, modulando a fotocorrente de saturação."*
 
 ---
 
-### ⏱️ SLIDE 7 — Diferenciação: Efeito Fotoelétrico vs. Efeito Fotovoltaico (11:00 – 12:45)
-* **Quem apresenta:** Logan
-* **Roteiro de Fala:**
-  1. *"No Slide 7, atendendo à sugestão do professor, apresentamos a diferenciação física rigorosa entre o **Efeito Fotoelétrico** e o **Efeito Fotovoltaico**:"*
-  2. *"Existem quatro diferenças cruciais:"*
-     - *"1. **Mecanismo e Localização:** O efeito fotoelétrico é uma **fotoemissão externa** — o elétron absorve o fóton e é ejetado para fora do material (para o vácuo). Já o efeito fotovoltaico é uma **fotoexcitação interna** — o elétron absorve o fóton e é promovido da banda de valência para a banda de condução, permanecendo dentro da rede cristalina do semicondutor."*
-     - *"2. **Barreira Energética:** No fotoelétrico, a barreira é a **Função Trabalho ($\phi$)** dos metais (típica de $2{,}2$ a $6{,}5\text{ eV}$), exigindo comprimentos de onda curtos (UV ou topo do visível). No fotovoltaico, a barreira é a **Energia de Bandgap ($E_g$)** do semicondutor ($\sim 1{,}1\text{ eV}$ no Silício), permitindo absorver praticamente todo o espectro visível e infravermelho próximo."*
-     - *"3. **Geração de Tensão:** O efeito fotoelétrico **não gera força eletromotriz espontânea** — ele precisa de uma fonte externa no circuito para drenar a corrente. No efeito fotovoltaico, o campo elétrico interno da **junção p-n** separa os elétrons e buracos, criando uma tensão de circuito aberto útil ($V_{oc}$) capaz de alimentar cargas elétricas diretamente."*
-     - *"4. **Dispositivos:** O fotoelétrico dá origem a tubos fotomultiplicadores e fototubos a vácuo; o fotovoltaico é o coração das células solares e dos fotodiodos PIN/APD das telecomunicações."*
-
----
-
-### ⏱️ SLIDE 8 — Aplicações em Engenharia e Referências Bibliográficas (12:45 – 13:45)
+### ⏱️ SLIDE 8 — Aplicações em Engenharia e Referências Bibliográficas (FINAL) (12:45 – 13:45)
 * **Quem apresenta:** Samuel Farias
 * **Roteiro de Fala:**
-  1. *"Para encerrar, no Slide 8 destacamos as principais aplicações dessas teorias na Engenharia de Telecomunicações e Optoeletrônica:"*
-     - *"**Tubos Fotomultiplicadores (PMT):** Utilizam fotocátodos baseados no efeito fotoelétrico seguidos de dínodos multiplicadores, atingindo ganho de até $10^6$ para detecção de fótons únicos em astrofísica, física médica e lidar."*
+  1. *"Para encerrar nossa apresentação, no Slide 8 destacamos as principais aplicações dessas teorias na Engenharia de Telecomunicações e Optoeletrônica:"*
+     - *"**Tubos Fotomultiplicadores (PMT):** Utilizam fotocátodos baseados no efeito fotoelétrico com ganho de até $10^6$ para detecção de fótons únicos em astrofísica, física médica e lidar."*
      - *"**Intensificadores de Imagem:** Base dos dispositivos de visão noturna, onde fótons fracos são convertidos em feixes eletrônicos que excitam telas fosforescentes."*
-     - *"**Espectroscopia de Fotoelétrons (XPS/UPS):** Técnica analítica essencial em ciência dos materiais para medir a composição química de superfícies e a densidade de estados eletrônicos."*
+     - *"**Espectroscopia de Fotoelétrons (XPS/UPS):** Técnica analítica essencial em ciência dos materiais para medir a composição química de superfícies e a estrutura de bandas de sólidos."*
      - *"**Fotodetectores em Comunicações Ópticas:** Operam integrando princípios fotocondutivos e fotovoltaicos em receptores de fibra óptica para taxas de dezenas de gigabits por segundo."*
   2. *"Como referências bibliográficas do trabalho, destacamos o livro-texto da disciplina: o **Principles of Electronic Materials and Devices**, do professor Safa Kasap, o livro clássico de **Física Quântica** de Eisberg e Resnick, além das notas de aula do professor Joacir Andrade. Muito obrigado a todos!"*
 

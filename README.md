@@ -16,15 +16,15 @@ Este repositório reúne a **simulação computacional em Python**, o **simulado
 ### Questão Central do Trabalho
 > *"Como a frequência e a intensidade da luz incidente influenciam a emissão de elétrons de uma superfície metálica, e como a simulação permite verificar as previsões da teoria quântica da luz?"*
 
-### Estrutura da Apresentação (8 Slides — Atendendo às Recomendações do Professor)
-1. **O Problema:** Desafios físicos e variáveis em análise.
-2. **Como Resolvemos:** Modelagem matemática das equações quânticas ($E=hf$, $f_0$, $K_{\max}$, $V_0$).
-3. **Simulação dos 9 Metais (Página Dedicada):** Gráfico comparativo de $\phi$ vs. luz visível e UV com alta legibilidade.
-4. **Resultados 1:** Curvas $K_{\max} \times f$ (inclinação universal $h$) e estudo de caso do Sódio (Aula 03).
-5. **Resultados 2:** Curvas características $I_{\text{foto}} \times V$ (efeito de $I$ vs. $f$).
-6. **A Simulação Interativa:** Demonstração prática do simulador em tempo real e resposta central.
-7. **Diferenciação Teórica:** Tabela comparativa entre **Efeito Fotoelétrico (externo)** e **Efeito Fotovoltaico (interno)**.
-8. **Aplicações e Referências:** Aplicações em Telecom e Optoeletrônica e referências bibliográficas formais (Kasap, Eisberg-Resnick, Tipler e Aula 03).
+### Estrutura da Apresentação (8 Slides — Com Simulação no Penúltimo Slide)
+1. **Slide 1:** O Problema (Desafios físicos e variáveis em análise).
+2. **Slide 2:** Como Resolvemos (Modelagem matemática das equações quânticas $E=hf$, $f_0$, $K_{\max}$, $V_0$).
+3. **Slide 3:** Simulação dos 9 Metais (Página dedicada para $\phi$ vs. luz visível e UV).
+4. **Slide 4:** Resultados 1 (Curvas $K_{\max} \times f$ com inclinação universal $h$ e caso do Sódio).
+5. **Slide 5:** Resultados 2 (Curvas características $I_{\text{foto}} \times V$, efeito de $I$ vs. $f$).
+6. **Slide 6:** Diferenciação Teórica (Efeito Fotoelétrico externo vs. Efeito Fotovoltaico interno).
+7. **Slide 7 (PENÚLTIMO):** A Simulação Computacional Interativa (Demonstração prática ao vivo e resposta central).
+8. **Slide 8 (FINAL):** Aplicações em Engenharia de Telecomunicações e Referências Bibliográficas (Kasap, Eisberg-Resnick, Tipler e Aula 03).
 
 ---
 
