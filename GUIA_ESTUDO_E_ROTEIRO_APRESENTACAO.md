@@ -3,7 +3,7 @@
 **Disciplina:** TI0060 — Materiais Eletrônicos e Optoeletrônicos (UFC 2026.2)  
 **Professor:** Dr. Joacir Andrade  
 **Avaliação:** 1ª Avaliação — Tema 2 (*Efeito Fotoelétrico por meio de Simulação Computacional*)  
-**Equipe:** Logan e Samuel Farias  
+**Equipe:** Logan Oliveira e Samuel Farias  
 **Prazo de envio dos slides:** até **21/10/2026**  
 **Tempo regulamentar de exposição:** **10 a 15 minutos** (tempo planejado da dupla: **12 a 13 minutos**)
 
@@ -31,10 +31,10 @@ A sequência de slides foi refinada para colocar a demonstração computacional 
 | **1** | **O Problema** | Desafios físicos observados e variáveis em jogo | **Samuel Farias** | ~01:30 min |
 | **2** | **Como Resolvemos** | Equações governantes ($E=hf$, $f_0$, $K_{\max}$, $V_0$) | **Samuel Farias** | ~01:30 min |
 | **3** | **Simulação dos 9 Metais** | Página inteira: barreira $\phi$ vs. faixas visível e UV | **Samuel Farias** | ~01:45 min |
-| **4** | **Resultados 1 (Frequência)** | Curvas $K_{\max} \times f$ com inclinação $h$ e caso do Sódio | **Logan** | ~02:00 min |
-| **5** | **Resultados 2 (Fotocorrente)** | Curvas $I_{\text{foto}} \times V$: efeito de Intensidade vs. Frequência | **Logan** | ~02:00 min |
-| **6** | **Fotoelétrico vs. Fotovoltaico** | Tabela comparativa: externo vs. interno, $\phi$ vs. $E_g$ | **Logan** | ~01:45 min |
-| **7** | **Simulação ao Vivo (Penúltimo)** | Demonstração em tempo real no Canvas + Resposta central | **Logan + Samuel** | ~02:15 min |
+| **4** | **Resultados 1 (Frequência)** | Curvas $K_{\max} \times f$ com inclinação $h$ e caso do Sódio | **Logan Oliveira** | ~02:00 min |
+| **5** | **Resultados 2 (Fotocorrente)** | Curvas $I_{\text{foto}} \times V$: efeito de Intensidade vs. Frequência | **Logan Oliveira** | ~02:00 min |
+| **6** | **Fotoelétrico vs. Fotovoltaico** | Tabela comparativa: externo vs. interno, $\phi$ vs. $E_g$ | **Logan Oliveira** | ~01:45 min |
+| **7** | **Simulação ao Vivo (Penúltimo)** | Demonstração em tempo real no Canvas + Resposta central | **Logan Oliveira + Samuel** | ~02:15 min |
 | **8** | **Aplicações e Referências** | Aplicações em Telecom e citação bibliográfica formal | **Samuel Farias** | ~01:15 min |
 | **Total** | — | — | **Dupla** | **~12:00 min** |
 
@@ -47,7 +47,7 @@ A sequência de slides foi refinada para colocar a demonstração computacional 
 ### ⏱️ SLIDE 1 — O Problema: Comportamento da Emissão Fotoelétrica (00:00 – 01:30)
 * **Quem apresenta:** Samuel Farias
 * **Roteiro de Fala:**
-  1. *"Boa tarde, professor Joacir e colegas. Eu sou o Samuel Farias e, juntamente com o Logan, somos a equipe do Tema 2: o estudo do Efeito Fotoelétrico por meio de Simulação Computacional."*
+  1. *"Boa tarde, professor Joacir e colegas. Eu sou o Samuel Farias e, juntamente com o Logan Oliveira, somos a equipe do Tema 2: o estudo do Efeito Fotoelétrico por meio de Simulação Computacional."*
   2. *"A nossa Questão Central investiga: **Como a frequência ($f$) e a intensidade ($I$) da radiação governam a emissão de elétrons de uma superfície metálica, e como podemos modelar e verificar esse comportamento computacionalmente?**"*
   3. *"Quando iluminamos uma placa metálica no vácuo, deparamo-nos com três mistérios físicos fundamentais:"*
      - *"Primeiro: a existência de uma **frequência de corte estrita ($f_0$)** — abaixo dela, nenhum elétron escapa, mesmo sob um feixe de luz extremamente potente."*
@@ -81,7 +81,7 @@ A sequência de slides foi refinada para colocar a demonstração computacional 
 ---
 
 ### ⏱️ SLIDE 4 — Resultados 1: Influência da Frequência e Caso do Sódio (04:45 – 06:45)
-* **Quem apresenta:** Logan
+* **Quem apresenta:** Logan Oliveira
 * **Roteiro de Fala:**
   1. *"Passando para o Slide 4, apresentamos o gráfico da **Energia Cinética Máxima ($K_{\max}$) em função da Frequência ($f$)** obtido com nossa simulação em Python."*
   2. *"O primeiro resultado marcante é que todas as curvas para $f \ge f_0$ são **retas estritamente paralelas**! Isso decorre da equação $K_{\max} = hf - \phi$, onde o coeficiente angular é a **constante universal de Planck ($h$)**."*
@@ -93,7 +93,7 @@ A sequência de slides foi refinada para colocar a demonstração computacional 
 ---
 
 ### ⏱️ SLIDE 5 — Resultados 2: Intensidade vs. Frequência na Fotocorrente (06:45 – 08:45)
-* **Quem apresenta:** Logan
+* **Quem apresenta:** Logan Oliveira
 * **Roteiro de Fala:**
   1. *"No Slide 5, isolamos matematicamente o efeito da Intensidade do efeito da Frequência nas curvas de Fotocorrente ($I_{\text{foto}}$) versus Tensão ($V$)."*
   2. *"No **Gráfico (a)** à esquerda, fixamos a frequência na luz violeta e variamos a intensidade ($30\%, 60\%, 100\%$):"*
@@ -104,7 +104,7 @@ A sequência de slides foi refinada para colocar a demonstração computacional 
 ---
 
 ### ⏱️ SLIDE 6 — Diferenciação: Efeito Fotoelétrico vs. Efeito Fotovoltaico (08:45 – 10:30)
-* **Quem apresenta:** Logan
+* **Quem apresenta:** Logan Oliveira
 * **Roteiro de Fala:**
   1. *"No Slide 6, apresentamos a diferenciação física rigorosa entre o **Efeito Fotoelétrico** e o **Efeito Fotovoltaico** antes de irmos para a demonstração prática:"*
   2. *"Existem quatro diferenças fundamentais:"*
@@ -116,10 +116,10 @@ A sequência de slides foi refinada para colocar a demonstração computacional 
 ---
 
 ### ⏱️ SLIDE 7 — A Simulação Interativa e Validação ao Vivo (PENÚLTIMO) (10:30 – 12:45)
-* **Quem apresenta:** Logan e Samuel Farias
+* **Quem apresenta:** Logan Oliveira e Samuel Farias
 * **Como conduzir:**
   1. *(Samuel introduz o slide em 20 segundos):* *"Agora, no Slide 7, coroamos toda a validação física demonstrando a ferramenta interativa que desenvolvemos: o `simulador_interativo.html`, que funciona offline no navegador com animação física via HTML5 Canvas."*
-  2. *(Logan dá `Alt + Tab` para o navegador em tela cheia e faz os 3 testes rápidos em 1 minuto):*
+  2. *(Logan Oliveira dá `Alt + Tab` para o navegador em tela cheia e faz os 3 testes rápidos em 1 minuto):*
      - **Teste 1 (Corte):** *"Sódio sob Luz Amarela a 100% de intensidade $\implies$ nenhum elétron sai da placa porque $hf < \phi$."*
      - **Teste 2 (Emissão e Frenagem):** *"Luz Violeta $\implies$ fotoelétrons fluem; clicamos no botão vermelho `🛑 Aplicar Potencial de Corte (-V₀)` ($-0{,}70\text{ V}$) e os elétrons freiam no meio do tubo antes de tocar o ânodo, zerando a corrente."*
      - **Teste 3 (Troca de Metal):** *"Mudando para Cobre ($\phi = 4{,}70\text{ eV}$), a luz violeta para de emitir; clicando em UV ($250\text{ nm}$), a emissão é retomada na hora."*

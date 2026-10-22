@@ -2,7 +2,7 @@
 Simulação Computacional do Efeito Fotoelétrico
 Disciplina: TI0060 - Materiais Eletrônicos e Optoeletrônicos (UFC 2026.2)
 Professor: Dr. Joacir Andrade
-Tema 2 - Equipe: Logan e Samuel Farias
+Tema 2 - Equipe: Logan Oliveira e Samuel Farias
 
 Descrição:
     Simula o efeito fotoelétrico verificando as previsões da teoria quântica
@@ -376,4 +376,44 @@ def gerar_fig3_comparacao_metais(output_dir: str) -> str:
     return caminho
 
 # =============================================================================
+
+# =============================================================================
 # 5. RELATÓRIO NO TERMINAL E EXECUÇÃO PRINCIPAL
+# =============================================================================
+def imprimir_relatorio_analitico() -> None:
+    print("=" * 85)
+    print("SIMULAÇÃO DO EFEITO FOTOELÉTRICO - TI0060 (EQUIPE: LOGAN OLIVEIRA E SAMUEL FARIAS)")
+    print("=" * 85)
+    print(f"{'Metal':<16} | {'phi (eV)':<9} | {'f_0 (10^14 Hz)':<15} | {'lambda_0 (nm)':<14} | {'Região de Corte'}")
+    print("-" * 85)
+    for sigla, d in METAIS_AULA03.items():
+        phi = d["phi"]
+        f0 = phi / H_EV_S
+        lam0_nm = (C_LIGHT / f0) * 1e9
+        regiao = "Visível (Verde)" if lam0_nm >= 400 else "Ultravioleta (UV)"
+        print(f"{d['nome']:<16} | {phi:<9.2f} | {f0/1e14:<15.2f} | {lam0_nm:<14.1f} | {regiao}")
+
+    print("\n" + "=" * 85)
+    print("ESTUDO DE CASO DA AULA 03 (SLIDE 8): PLACA DE SÓDIO (Na, phi = 2,28 eV)")
+    print("=" * 85)
+    phi_na = METAIS_AULA03["Na"]["phi"]
+    for nome_cor, f_hz, _ in CORES_LUZ_AULA03 + [("Ultravioleta (300 nm)", C_LIGHT / 300e-9, "#000")]:
+        ef = float(calcular_energia_foton_ev(f_hz))
+        kmax = float(calcular_kmax_ev(f_hz, phi_na))
+        vmax = float(calcular_velocidade_max_m_s(kmax))
+        status = "EMITE ELÉTRONS" if kmax > 0 else "NÃO EMITE (hf < phi)"
+        print(
+            f"Cor: {nome_cor:<22} | f = {f_hz/1e14:5.2f}x10^14 Hz | "
+            f"E_foton = {ef:4.2f} eV | K_max = {kmax:4.2f} eV | "
+            f"v_max = {vmax/1e5:5.2f}x10^5 m/s | {status}"
+        )
+    print("=" * 85)
+
+
+if __name__ == "__main__":
+    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+    imprimir_relatorio_analitico()
+    c1 = gerar_fig1_kmax_vs_frequencia(diretorio_atual)
+    c2 = gerar_fig2_corrente_vs_tensao(diretorio_atual)
+    c3 = gerar_fig3_comparacao_metais(diretorio_atual)
+    print(f"\n[OK] Figuras geradas com sucesso em:\n  1) {c1}\n  2) {c2}\n  3) {c3}")

@@ -5,7 +5,7 @@
 > **Disciplina:** TI0060 — Materiais Eletrônicos e Optoeletrônicos  
 > **Professor:** Dr. Joacir Andrade  
 > **Avaliação:** 1ª Avaliação — **Tema 2 (Grupo 2)**  
-> **Equipe:** Logan e Samuel Farias  
+> **Equipe:** Logan Oliveira e Samuel Farias  
 
 ---
 
@@ -34,7 +34,7 @@ Este repositório reúne a **simulação computacional em Python**, o **simulado
 | :--- | :--- |
 | 📝 **[`Apresentacao_Tema02_Beamer.tex`](./Apresentacao_Tema02_Beamer.tex)** | Código-fonte em **LaTeX Beamer** dos 8 slides (pronto para compilar no Overleaf). |
 | ⚡ **[`simulador_interativo.html`](./simulador_interativo.html)** | **Simulador computacional interativo (HTML5/Canvas)**. Abre direto no navegador (offline) para demonstração ao vivo durante a apresentação. |
-| 📘 **[`GUIA_ESTUDO_E_ROTEIRO_APRESENTACAO.md`](./GUIA_ESTUDO_E_ROTEIRO_APRESENTACAO.md)** | **Roteiro completo e objetivo para a dupla**: divisão de fala minuto a minuto entre **Samuel e Logan** (12–13 min), passo a passo da demonstração ao vivo e arguição com respostas prontas. |
+| 📘 **[`GUIA_ESTUDO_E_ROTEIRO_APRESENTACAO.md`](./GUIA_ESTUDO_E_ROTEIRO_APRESENTACAO.md)** | **Roteiro completo e objetivo para a dupla**: divisão de fala minuto a minuto entre **Samuel e Logan Oliveira** (12–13 min), passo a passo da demonstração ao vivo e arguição com respostas prontas. |
 | 🐍 **[`simulacao_efeito_fotoeletrico.py`](./simulacao_efeito_fotoeletrico.py)** | Script Python (NumPy + Matplotlib) que modela a física fotoelétrica, resolve os problemas da Aula 03 e exporta os gráficos em 300 DPI. |
 | 📊 **[`fig1_kmax_vs_frequencia.png`](./fig1_kmax_vs_frequencia.png)** | Gráfico simulado: Energia Cinética Máxima ($K_{\max}$) vs. Frequência ($f$) para múltiplos metais. |
 | 📊 **[`fig2_corrente_vs_tensao.png`](./fig2_corrente_vs_tensao.png)** | Painel duplo simulado: Fotocorrente ($I_{\text{foto}}$) vs. Tensão ($V$) variando Intensidade vs. Frequência. |
