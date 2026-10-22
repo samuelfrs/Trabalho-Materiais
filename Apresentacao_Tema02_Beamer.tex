@@ -54,7 +54,7 @@
       \begin{exampleblock}{Parâmetros e Variáveis do Estudo}
         \footnotesize
         \begin{itemize}
-          \item \textbf{Radiação Incidente:} Frequência ($f$), comprimento de onda ($\lambda$) e intensidade luminosa ($I$).
+          \item \textbf{Radiação Incidente:} Frequência ($f$), comprimento de onda ($\lambda = c/f$) e intensidade luminosa ($I$).
           \item \textbf{Cátodo Emissor:} Função trabalho ($\phi$) dos 9 metais da Aula 03 (do $\text{Na}$ com $2{,}28\text{ eV}$ à $\text{Pt}$ com $6{,}35\text{ eV}$).
           \item \textbf{Circuito Elétrico:} Potencial de frenagem ($-V_0$) e fotocorrente ($I_{\text{foto}}$).
         \end{itemize}
@@ -64,51 +64,73 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 2: COMO RESOLVEMOS: MODELAGEM TEÓRICA E COMPUTACIONAL (LAYOUT LIMPO)
+% SLIDE 2: COMO RESOLVEMOS: MODELAGEM TEÓRICA E EQUAÇÕES GOVERNANTES
 % =============================================================================
-\begin{frame}{2. Como Resolvemos: Modelagem Teórica e Computacional}
-  \vspace{-0.35cm}
+\begin{frame}{2. Como Resolvemos: Modelagem Teórica e Equações Governantes}
+  \vspace{-0.15cm}
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
-      \small
-      \textbf{1. Fóton e Barreira do Material ($\phi$):}
-      \footnotesize
-      \begin{itemize}
-        \item Energia do Fóton: $E_f = h f = \frac{hc}{\lambda}$ \quad ($h \approx 4{,}136\times 10^{-15}\text{ eV}\cdot\text{s}$)
-        \item Frequência de Corte: $f_0 = \frac{\phi}{h} \iff \lambda_0 = \frac{hc}{\phi}$
-      \end{itemize}
+      \begin{block}{1. Quantização da Luz e Barreira do Material}
+        \footnotesize
+        \textbf{Energia Discreta do Fóton (Planck-Einstein):}
+        \[ E_f = h f = \frac{h c}{\lambda} \]
+        com $h \approx 4{,}136 \times 10^{-15}\text{ eV}\cdot\text{s} = 6{,}626 \times 10^{-34}\text{ J}\cdot\text{s}$.
+        \vspace{0.15cm}
+
+        \textbf{Função Trabalho ($\phi$) e Limiar de Corte ($f_0$):}
+        \[ f_0 = \frac{\phi}{h} \qquad \iff \qquad \lambda_0 = \frac{c}{f_0} = \frac{h c}{\phi} \]
+        Condição de emissão: $E_f \ge \phi$ (ou $f \ge f_0$, $\lambda \le \lambda_0$).
+      \end{block}
     \end{column}
 
     \begin{column}{0.48\textwidth}
-      \small
-      \textbf{2. Balanço de Einstein e Frenagem ($V_0$):}
-      \footnotesize
-      \begin{itemize}
-        \item Balanço Energético: $K_{\max} = hf - \phi = \frac{1}{2}m_e v_{\max}^2$
-        \item Potencial de Frenagem: $q V_0 = K_{\max} \implies V_0 = \frac{h}{q}f - \frac{\phi}{q}$
-      \end{itemize}
+      \begin{block}{2. Balanço de Einstein e Frenagem no Circuito}
+        \footnotesize
+        \textbf{Equação de Einstein para o Efeito Fotoelétrico:}
+        \[ K_{\max} = h f - \phi = h(f - f_0) = \frac{1}{2} m_e v_{\max}^2 \]
+        onde $m_e \approx 9{,}109 \times 10^{-31}\text{ kg}$ é a massa do elétron.
+        \vspace{0.15cm}
+
+        \textbf{Potencial de Frenagem ($V_0$) no Circuito:}
+        \[ q V_0 = K_{\max} \implies V_0 = \frac{h}{q} f - \frac{\phi}{q} \]
+        Reta de inclinação universal $\Delta V_0 / \Delta f = h/q$, permitindo determinar a constante de Planck experimentalmente.
+      \end{block}
     \end{column}
   \end{columns}
-
-  \vspace{0.10cm}
-  \centering
-  \includegraphics[height=3.60cm, width=0.88\textwidth, keepaspectratio]{fig3_comparacao_metais_barreira.png}
 \end{frame}
 
 % =============================================================================
-% SLIDE 3: RESULTADOS 1 — INFLUÊNCIA DA FREQUÊNCIA E CASO DO SÓDIO
+% SLIDE 3: SIMULAÇÃO DOS 9 METAIS: BARREIRA (phi) vs. ESPECTRO
 % =============================================================================
-\begin{frame}{3. Resultados 1: Influência da Frequência e Estudo de Caso do Sódio}
+\begin{frame}{3. Simulação dos 9 Metais: Função Trabalho ($\phi$) vs. Espectro}
+  \vspace{-0.15cm}
+  \centering
+  \includegraphics[height=4.80cm, width=0.96\textwidth, keepaspectratio]{fig3_comparacao_metais_barreira.png}
+
+  \vspace{0.15cm}
+  \begin{block}{\footnotesize Análise Crítica dos Resultados da Simulação (Aula 03 — Prof. Joacir Andrade)}
+    \scriptsize
+    \begin{itemize}
+      \item \textbf{Sódio ($\text{Na}$, $\phi = 2{,}28\text{ eV}$):} É o \textbf{único dos 9 metais} cuja função trabalho está abaixo do limite da luz visível (linha violeta, $E_f = 2{,}98\text{ eV}$, $\lambda = 416\text{ nm}$). Por isso, sofre emissão com luz visível ($\lambda < 544\text{ nm}$).
+      \item \textbf{Demais 8 Metais ($\text{Co}, \text{Al}, \text{Pb}, \text{Zn}, \text{Fe}, \text{Cu}, \text{Ag}, \text{Pt}$):} Apresentam barreira $\phi \ge 3{,}90\text{ eV}$ até $6{,}35\text{ eV}$, exigindo obrigatoriamente radiação na faixa do \textbf{Ultravioleta (UV)} para que ocorra a extração de fotoelétrons.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% =============================================================================
+% SLIDE 4: RESULTADOS 1 — INFLUÊNCIA DA FREQUÊNCIA E CASO DO SÓDIO
+% =============================================================================
+\begin{frame}{4. Resultados 1: Influência da Frequência e Estudo de Caso do Sódio}
   \begin{columns}[c]
-    \begin{column}{0.57\textwidth}
+    \begin{column}{0.56\textwidth}
       \centering
       \includegraphics[width=\textwidth]{fig1_kmax_vs_frequencia.png}
     \end{column}
 
-    \begin{column}{0.41\textwidth}
+    \begin{column}{0.42\textwidth}
       \scriptsize
-      \textbf{Estudo de Caso (Aula 03 — Sódio, $\phi = 2{,}28\text{ eV}$):}
-      \vspace{0.1cm}
+      \textbf{Estudo de Caso da Aula 03 (Sódio, $\phi = 2{,}28\text{ eV}$):}
+      \vspace{0.08cm}
       \begin{table}
         \centering
         \begin{tabular}{lccc}
@@ -134,28 +156,28 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 4: RESULTADOS 2 — INTENSIDADE vs. FREQUÊNCIA NA FOTOCORRENTE
+% SLIDE 5: RESULTADOS 2 — INTENSIDADE vs. FREQUÊNCIA NA FOTOCORRENTE
 % =============================================================================
-\begin{frame}{4. Resultados 2: Intensidade ($I$) vs. Frequência ($f$) na Fotocorrente}
+\begin{frame}{5. Resultados 2: Intensidade ($I$) vs. Frequência ($f$) na Fotocorrente}
   \centering
   \includegraphics[width=0.92\textwidth]{fig2_corrente_vs_tensao.png}
   \vspace{-0.15cm}
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
       \scriptsize
-      \textbf{(a) Variação da Intensidade ($f$ fixa):} Aumentar $I$ multiplica o número de fótons/s $\Rightarrow$ a fotocorrente de saturação cresce proporcionalmente, mas o potencial de corte $-V_0 = -0{,}70\text{ V}$ (e $K_{\max}$) \textbf{permanece estritamente fixo}.
+      \textbf{(a) Variação da Intensidade ($f$ fixa):} Aumentar $I$ multiplica o número de fótons/s $\Rightarrow$ a fotocorrente de saturação cresce proporcionalmente ($I_{\text{sat}} \propto I$), mas o potencial de corte $-V_0 = -0{,}70\text{ V}$ (e $K_{\max}$) \textbf{permanece rigorosamente fixo}.
     \end{column}
     \begin{column}{0.48\textwidth}
       \scriptsize
-      \textbf{(b) Variação da Frequência (Taxa de fótons fixa):} Aumentar $f$ eleva a energia individual de cada fóton ($hf$) $\Rightarrow$ $K_{\max}$ cresce e o potencial de corte $-V_0$ torna-se progressivamente mais negativo.
+      \textbf{(b) Variação da Frequência (Taxa de fótons fixa):} Aumentar $f$ eleva a energia individual de cada fóton ($hf$) $\Rightarrow$ $K_{\max}$ cresce e o potencial de corte $-V_0 = -K_{\max}/q$ torna-se progressivamente mais negativo.
     \end{column}
   \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 5: A SIMULAÇÃO: DEMONSTRAÇÃO INTERATIVA E CONCLUSÕES
+% SLIDE 6: A SIMULAÇÃO COMPUTACIONAL INTERATIVA E DEMONSTRAÇÃO AO VIVO
 % =============================================================================
-\begin{frame}{5. A Simulação: Demonstração Interativa e Conclusões}
+\begin{frame}{6. A Simulação Computacional Interativa e Validação ao Vivo}
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
       \begin{block}{Simulador Interativo (HTML5 / Canvas)}
@@ -163,20 +185,78 @@
         \begin{itemize}
           \item Tubo a vácuo com fotocátodo e ânodo com visualização contínua dos fotoelétrons em tempo real.
           \item Seletor rápido dos 9 metais da Aula 03.
-          \item Controles de espectro luminoso, intensidade e tensão coletor-cátodo.
-          \item Botão de frenagem: aplica $-V_0$ e interrompe o fluxo de fotoelétrons na hora.
+          \item Controles de espectro luminoso, intensidade ($0-100\%$) e tensão coletor-cátodo.
+          \item \textbf{Botão de Frenagem Rápida:} aplica $-V_0$ e interrompe o fluxo de fotoelétrons imediatamente.
+          \item Execução offline em qualquer navegador.
         \end{itemize}
       \end{block}
     \end{column}
 
     \begin{column}{0.48\textwidth}
-      \begin{exampleblock}{Resposta ao Problema e Engenharia}
+      \begin{exampleblock}{Resposta Definitiva à Questão Central}
         \footnotesize
         \begin{itemize}
-          \item \textbf{Frequência ($f$):} Qualidade energética ($hf$). Governa SE há ejeção, o valor de $K_{\max}$ e de $-V_0$.
-          \item \textbf{Intensidade ($I$):} Quantidade de fótons/s. Modula a fotocorrente de saturação ($I_{\text{sat}}$).
-          \item Aplicações vitais em fotodetectores PIN/APD de telecomunicações e espectroscopia óptica.
+          \item \textbf{Frequência ($f$):} Governa a \textbf{qualidade energética} de cada pacote ($E = hf$). Determina SE haverá emissão ($f \ge f_0$), a energia cinética máxima ($K_{\max}$) e o potencial de corte $-V_0$.
+          \item \textbf{Intensidade ($I$):} Governa a \textbf{quantidade de pacotes por segundo}. Modula linearmente a fotocorrente de saturação ($I_{\text{sat}}$), sem alterar $K_{\max}$.
         \end{itemize}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 7: DIFERENCIAÇÃO: EFEITO FOTOELÉTRICO vs. EFEITO FOTOVOLTAICO
+% =============================================================================
+\begin{frame}{7. Diferenciação: Efeito Fotoelétrico vs. Efeito Fotovoltaico}
+  \vspace{-0.15cm}
+  \footnotesize
+  \begin{table}
+    \centering
+    \begin{tabular}{p{3.2cm}p{5.6cm}p{5.6cm}}
+      \toprule
+      \textbf{Critério de Comparação} & \textbf{Efeito Fotoelétrico (Externo)} & \textbf{Efeito Fotovoltaico (Interno)} \\
+      \midrule
+      \textbf{Mecanismo Físico} & Elétron absorve fóton e é \textbf{ejetado para fora} da superfície metálica (para o vácuo). & Fóton absorvido na rede do semicondutor gera \textbf{par elétron-buraco interno}. \\
+      \addlinespace[0.1cm]
+      \textbf{Barreira Energética} & \textbf{Função Trabalho ($\phi$):} Barreira de ligação do metal ($\sim 2{,}2\text{ a }6{,}5\text{ eV}$). & \textbf{Bandgap ($E_g$):} Intervalo proibido entre bandas de valência e condução ($\sim 1{,}1\text{ eV}$ no Si). \\
+      \addlinespace[0.1cm]
+      \textbf{Região Espectral Típica} & Exige luz visível de alta energia (violeta) ou \textbf{Ultravioleta (UV)}. & Opera na faixa da \textbf{luz visível e Infravermelho próximo (IV)}. \\
+      \addlinespace[0.1cm]
+      \textbf{Geração de Tensão (f.e.m.)} & Não gera tensão espontânea; requer \textbf{fonte externa} para acelerar ou frear elétrons. & O campo elétrico interno da junção p-n separa portadores, gerando \textbf{diferença de potencial útil ($V_{oc}$)}. \\
+      \addlinespace[0.1cm]
+      \textbf{Dispositivos Típicos} & Tubos fotomultiplicadores (PMT), fototubos a vácuo, sensores de radiação UV. & Células solares fotovoltaicas, fotodiodos PIN e APD em comunicações ópticas. \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+% =============================================================================
+% SLIDE 8: APLICAÇÕES EM ENGENHARIA E REFERÊNCIAS BIBLIOGRÁFICAS
+% =============================================================================
+\begin{frame}{8. Aplicações em Engenharia e Referências Bibliográficas}
+  \vspace{-0.15cm}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Aplicações em Telecom e Optoeletrônica}
+        \scriptsize
+        \begin{itemize}
+          \item \textbf{Tubos Fotomultiplicadores (PMT):} Amplificação por emissão secundária com ganho até $10^6$ para detecção de fótons únicos em astrofísica e física de partículas.
+          \item \textbf{Intensificadores de Imagem:} Fotocátodos fotoelétricos que convertem fótons UV/IV em feixes eletrônicos (visão noturna).
+          \item \textbf{Espectroscopia de Fotoelétrons (XPS/UPS):} Determinação precisa da composição química e estrutura de bandas de semicondutores e materiais 2D.
+          \item \textbf{Receptores Ópticos em Telecomunicações:} Princípios fotoelétricos e fotocondutivos em enlaces de fibra óptica de alta velocidade.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{exampleblock}{Referências Bibliográficas}
+        \scriptsize
+        \begin{enumerate}
+          \item \textbf{KASAP, S. O.} \textit{Principles of Electronic Materials and Devices}. 4. ed. New York: McGraw-Hill Education, 2018. (Cap. 3: Elementary Quantum Physics).
+          \item \textbf{EISBERG, R.; RESNICK, R.} \textit{Física Quântica: Átomos, Moléculas, Sólidos, Núcleos e Partículas}. Rio de Janeiro: Elsevier, 1979. (Cap. 2: Teoria dos Fótons da Radiação).
+          \item \textbf{TIPLER, P. A.; LLEWELLYN, R. A.} \textit{Física Moderna}. 6. ed. Rio de Janeiro: LTC, 2014.
+          \item \textbf{ANDRADE, J.} \textit{Notas de Aula da Disciplina TI0060 — Materiais Eletrônicos e Optoeletrônicos}. Fortaleza: Universidade Federal do Ceará (UFC), 2026.
+        \end{enumerate}
       \end{exampleblock}
     \end{column}
   \end{columns}
